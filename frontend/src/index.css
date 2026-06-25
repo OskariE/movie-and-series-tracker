@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-deep: rgb(18, 21, 28); 
+  --bg-panel: rgb(26, 32, 48);
+  --bg-panel-soft: rgb(35, 42, 61);
+  --title-cream: rgb(243, 234, 217);
+  --header-gold: rgb(232, 162, 61);
+  --header-gold-dim: rgb(185, 127, 46);
+  --ink: rgb(27, 32, 48);
+  --ink-soft: rgb(107, 100, 80);
+  --text-light: rgb(243, 234, 217);
+  --text-muted: rgb(142, 147, 166);
+  --border-color: rgba(243, 234, 217, 0.08);
+}
+
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background: var(--bg-deep);
+}
