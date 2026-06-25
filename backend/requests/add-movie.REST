@@ -1,0 +1,5 @@
+POST http://localhost:5000/api/titles
+Content-Type: application/json
+
+ { "title": "Borrowed Light", "type": "movie", "status": "watching", "progressPct": 50, "poster": "https://m.media-amazon.com/images/M/MV5BOTA1Mzc2N2ItZWRiNS00MjQzLTlmZDQtMjU0NmY1YWRkMGQ4XkEyXkFqcGc@._V1_SX300.jpg" }
+
