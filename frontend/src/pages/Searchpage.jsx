@@ -19,6 +19,7 @@ export default function SearchPage() {
         const res = await searchTitles.search(query);
         console.log('Search response:', res);
         setResults(res);
+        console.log(results)
       } catch (err) {
         console.error('Search failed', err);
         setResults([]);
@@ -45,7 +46,7 @@ export default function SearchPage() {
 
       console.log('Adding title with data:', titleData);
       const res = await localTitlesService.create(titleData);
-      if (res.ok) {
+      if (res) {
         setAddedIds((prev) => [...prev, result.imdbID]);
       }
     } catch (err) {
@@ -72,17 +73,17 @@ export default function SearchPage() {
 
       {loading && <p className="empty-row compact">Searching…</p>}
 
-      {!loading && query && results.length === 0 && (
+      {!loading && query && !results.imdbID && (
         <p className="empty-row compact">No matches for "{query}".</p>
       )}
-
+      {results.imdbID && (
       <ul className="search-results">
-          <li key={`$${results.imdbID}`} className="search-result" >
+          <li key={`${results.imdbID}`} className="search-result" >
             <div className="search-result-info">
               <img src={results.Poster} alt={results.Title} className="search-result-poster-img" />
               <p className="search-result-title">{results.Title}</p>
               <p className="search-result-meta">
-                {results.type === 'series' ? 'Series' : 'Movie'}
+                {results.Type === 'series' ? 'Series' : 'Movie'}
                 {results.Released ? ` · ${results.Released.slice(7, 11)}` : ''}
               </p>
             </div>
@@ -94,7 +95,7 @@ export default function SearchPage() {
               {addedIds.includes(results.imdbID) ? 'Added' : 'Add to list'}
             </button>
           </li>
-      </ul>
+      </ul> )}
     </div>
   );
 }

@@ -8,16 +8,17 @@ function statsFrom(titles) {
   const completed = titles.filter((t) => t.status === 'completed').length
   const plan = titles.filter((t) => t.status === 'plan').length
   const minutes = titles.reduce((sum, t) => {
-    console.log(t)
-    if (t.type === 'series') return (sum + (t.episodesWatched * Number(t.runTime.split(" ")[0])))
-    return sum + Number(t.runTime.split(" ")[0])
-  }, 0)
+    if (t.type === 'series') return sum + (t.episodesWatched * Number(t.runTime.split(" ")[0]))
+    if (t.type === 'movie' && t.status === 'completed') return sum + Number(t.runTime.split(" ")[0])
+  return sum
+}, 0)
+  
   return { watching, completed, plan, hours: Number(Math.round((minutes / 60))) }
 }
 
 
 export default function Dashboard() {
-  const [titles, setTitles] = useState([])
+  const [titles, setTitles] = useState(null)
 
   useEffect(() => {
     localTitlesService.getAll().then(t =>
@@ -25,10 +26,10 @@ export default function Dashboard() {
     )
   }, [])
 
-  const stats = statsFrom(titles)
-  const watchingNow = titles.filter((t) => t.status === 'watching')
-  const planned = titles.filter((t) => t.status === 'plan')
-  const completed = titles.filter((t) => t.status === 'completed')
+  const stats = titles ? statsFrom(titles) : { watching: 0, completed: 0, plan: 0, hours: 0 }
+  const watchingNow = titles ? titles.filter((t) => t.status === 'watching') : []
+  const planned = titles ? titles.filter((t) => t.status === 'plan') : []
+  const completed = titles ? titles.filter((t) => t.status === 'completed') : []
 
     async function advanceEpisode(id) {
     const t = titles.find((t) => t.id === id)
@@ -51,7 +52,7 @@ export default function Dashboard() {
     const t = titles.find((t) => t.id === id)
     if (!t || t.type !== 'movie') return
     const watched = t.status === 'completed'
-    const updated = { ...t, status: watched ? 'watching' : 'completed', progressPct: watched ? t.progressPct : 100 }
+    const updated = { ...t, status: watched ? 'watching' : 'completed', progressPct: 100 }
     const saved = await localTitlesService.update(id, updated)
     setTitles((prev) => prev.map((t) => (t.id === id ? saved : t)))
   }
