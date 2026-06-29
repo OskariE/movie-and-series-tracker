@@ -8,6 +8,7 @@ const titleSchema = mongoose.Schema({
     episodesTotal: { type: Number, required: false },
     episodesWatched: { type: Number, required: false },
     progressPct: { type: Number, required: false },
+    runTime: { type: String, required: true},
     poster: { type: String, required: false},
     hue: { type: Number, required: true }
 })

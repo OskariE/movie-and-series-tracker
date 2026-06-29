@@ -8,6 +8,7 @@ localRouter.get('/', async (request, response) => {
 
 localRouter.post('/', async (request, response) => {
   const body = request.body
+
   const title = new Title({
     title: body.title,
     type: body.type,
@@ -15,6 +16,7 @@ localRouter.post('/', async (request, response) => {
     episodesTotal: body.episodesTotal,
     episodesWatched: body.episodesWatched,
     progressPct: body.progressPct,
+    runTime: body.runTime,
     poster: body.poster,
     hue: Math.floor(Math.random() * 360)
   })
@@ -43,6 +45,7 @@ localRouter.put('/:id', async (request, response) => {
     episodesTotal: body.episodesTotal,
     episodesWatched: body.episodesWatched,
     progressPct: body.progressPct,
+    runTime: body.Runtime,
     poster: body.poster,
     hue: Math.floor(Math.random() * 360)
   }
