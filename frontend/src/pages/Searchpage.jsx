@@ -39,6 +39,7 @@ export default function SearchPage() {
         episodesTotal: result.Type === 'series' ? parseInt(result.totalSeasons) * 10 : undefined,
         episodesWatched: result.Type === 'series' ? 0 : undefined,
         progressPct: result.Type === 'movie' ? 0 : undefined,
+        runTime: result.Runtime,
         poster: result.Poster
       }
 

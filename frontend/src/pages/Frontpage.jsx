@@ -7,12 +7,14 @@ function statsFrom(titles) {
   const watching = titles.filter((t) => t.status === 'watching').length
   const completed = titles.filter((t) => t.status === 'completed').length
   const plan = titles.filter((t) => t.status === 'plan').length
-  const hours = titles.reduce((sum, t) => {
-    if (t.type === 'series') return sum + t.episodesWatched * 0.7
-    return sum + (t.progressPct / 100) * 2
+  const minutes = titles.reduce((sum, t) => {
+    console.log(t)
+    if (t.type === 'series') return (sum + (t.episodesWatched * Number(t.runTime.split(" ")[0])))
+    return sum + Number(t.runTime.split(" ")[0])
   }, 0)
-  return { watching, completed, plan, hours: Math.round(hours) }
+  return { watching, completed, plan, hours: Number(Math.round((minutes / 60))) }
 }
+
 
 export default function Dashboard() {
   const [titles, setTitles] = useState([])
@@ -24,7 +26,6 @@ export default function Dashboard() {
   }, [])
 
   const stats = statsFrom(titles)
-
   const watchingNow = titles.filter((t) => t.status === 'watching')
   const planned = titles.filter((t) => t.status === 'plan')
   const completed = titles.filter((t) => t.status === 'completed')
