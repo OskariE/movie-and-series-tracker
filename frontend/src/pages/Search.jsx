@@ -3,7 +3,7 @@ import searchTitles from '../services/searchTitles.js';
 import localTitlesService from '../services/localTitles.js';
 import SearchBar from '../components/SearchBar.jsx'
 
-export default function SearchPage() {
+export default function Search() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,10 +13,6 @@ export default function SearchPage() {
       localTitlesService.getAll().then(a => 
       setAddedIds(a.map(t => t.imdbID)))
     }, [])
-
-  useEffect(() => {
-    console.log(addedIds)
-    }, [addedIds])
 
   useEffect(() => {
     if (!query.trim()) {

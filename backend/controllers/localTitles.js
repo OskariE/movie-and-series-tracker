@@ -49,7 +49,7 @@ localRouter.put('/:id', async (request, response) => {
     runTime: body.Runtime,
     poster: body.poster,
     imdbID: body.imdbID,
-    hue: Math.floor(Math.random() * 360)
+    hue: body.hue
   }
 
   const updatedTitle = await Title.findByIdAndUpdate(request.params.id, newTitle, { returnDocument: "after" })

@@ -79,7 +79,7 @@ export default function Dashboard() {
         ) : (
           <div className="title-grid">
             {watchingNow.map((t) => (
-              <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} />
+              <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showBar={true} />
             ))}
           </div>
         )}
@@ -92,7 +92,7 @@ export default function Dashboard() {
             <p className="empty-row-compact">The queue is clear.</p>
           ) : (
             <ul className="up-next-list">
-              {planned.map((t) => (
+              {planned.slice(0, 5).map((t) => (
                 <li key={t.id} className="up-next-item">
                   <span className="up-next-swatch" style={{ background: `hsl(${t.hue} 45% 32%)` }} />
                   <span className="up-next-title">{t.title}</span>
@@ -110,7 +110,7 @@ export default function Dashboard() {
             <p className="empty-row-compact">Nothing finished yet.</p>
           ) : (
             <ul className="up-next-list">
-              {completed.map((t) => (
+              {completed.slice(0, 5).map((t) => (
                 <li key={t.id} className="up-next-item">
                   <span className="up-next-swatch" style={{ background: `hsl(${t.hue} 45% 32%)` }} />
                   <span className="up-next-title">{t.title}</span>
