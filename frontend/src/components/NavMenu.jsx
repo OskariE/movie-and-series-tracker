@@ -4,16 +4,16 @@ const NavMenu = () => {
     return (
         <div>
         <nav className="navmenu">
-            <NavLink to="/" className='menu-item'>
+            <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : '')}>
                 Dashboard
             </NavLink>
-            <NavLink to="/search" className='menu-item'>
+            <NavLink to="/search" className={({ isActive }) => (isActive ? 'active' : '')}>
                 Search
             </NavLink>
-            <NavLink to="/my-list" className='menu-item'>
+            <NavLink to="/my-list" className={({ isActive }) => (isActive ? 'active' : '')}>
                 My List
             </NavLink>
-            <NavLink to="/history" className='menu-item'>
+            <NavLink to="/history" className={({ isActive }) => (isActive ? 'active' : '')}>
                 History
             </NavLink>
         </nav>

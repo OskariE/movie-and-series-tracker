@@ -58,7 +58,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="dashboard">
+    <div className="base">
       <header className="header">
         <div className="header-row">
           <h1 className="header-title">Dashboard</h1>
@@ -75,7 +75,7 @@ export default function Dashboard() {
       <section className="reel">
         <h2 className="label">Continue Watching</h2>
         {watchingNow.length === 0 ? (
-          <p className="empty-row">Add a movie or series to get started.</p>
+          <p className="empty-row-compact">Add a movie or series to get started.</p>
         ) : (
           <div className="title-grid">
             {watchingNow.map((t) => (
@@ -89,7 +89,7 @@ export default function Dashboard() {
         <section className="reel">
           <h2 className="label">Up Next</h2>
           {planned.length === 0 ? (
-            <p className="empty-row compact">The queue is clear.</p>
+            <p className="empty-row-compact">The queue is clear.</p>
           ) : (
             <ul className="up-next-list">
               {planned.map((t) => (
@@ -107,7 +107,7 @@ export default function Dashboard() {
         <section className="reel">
           <h2 className="label">Recently Completed</h2>
           {completed.length === 0 ? (
-            <p className="empty-row compact">Nothing finished yet.</p>
+            <p className="empty-row-compact">Nothing finished yet.</p>
           ) : (
             <ul className="up-next-list">
               {completed.map((t) => (

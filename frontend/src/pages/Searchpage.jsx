@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react';
 import searchTitles from '../services/searchTitles.js';
 import localTitlesService from '../services/localTitles.js';
+import SearchBar from '../components/SearchBar.jsx'
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addedIds, setAddedIds] = useState([]);
+
+  useEffect(() => {
+      localTitlesService.getAll().then(a => 
+      setAddedIds(a.map(t => t.imdbID)))
+    }, [])
+
+  useEffect(() => {
+    console.log(addedIds)
+    }, [addedIds])
+
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
@@ -17,16 +28,14 @@ export default function SearchPage() {
       setLoading(true);
       try {
         const res = await searchTitles.search(query);
-        console.log('Search response:', res);
         setResults(res);
-        console.log(results)
       } catch (err) {
         console.error('Search failed', err);
         setResults([]);
       } finally {
         setLoading(false);
       }
-    }, 300);
+    }, 450);
 
     return () => clearTimeout(timeout);
   }, [query]);
@@ -41,10 +50,10 @@ export default function SearchPage() {
         episodesWatched: result.Type === 'series' ? 0 : undefined,
         progressPct: result.Type === 'movie' ? 0 : undefined,
         runTime: result.Runtime,
-        poster: result.Poster
+        poster: result.Poster,
+        imdbID: result.imdbID
       }
 
-      console.log('Adding title with data:', titleData);
       const res = await localTitlesService.create(titleData);
       if (res) {
         setAddedIds((prev) => [...prev, result.imdbID]);
@@ -56,25 +65,21 @@ export default function SearchPage() {
 
 
   return (
-    <div className="dashboard">
+    <div className="base">
       <header className="header">
         <div className="header-row">
           <h1 className="header-title">Search</h1>
         </div>
       </header>
-
-      <input
-        className="search-bar"
-        type="text"
-        placeholder="Search for a movie or series…"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+      <SearchBar
+        query={query}
+        setQuery={setQuery}
       />
 
-      {loading && <p className="empty-row compact">Searching…</p>}
+      {loading && <p className="empty-row-compact">Searching…</p>}
 
       {!loading && query && !results.imdbID && (
-        <p className="empty-row compact">No matches for "{query}".</p>
+        <p className="empty-row-compact">No matches for "{query}".</p>
       )}
       {results.imdbID && (
       <ul className="search-results">

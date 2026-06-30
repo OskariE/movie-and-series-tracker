@@ -1,6 +1,6 @@
-const SearchBar = ({ searchTerm, setSearchTerm }) => {
+const SearchBar = ({ query, setQuery }) => {
   const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
+    setQuery(event.target.value);
   };
 
   return (
@@ -8,7 +8,7 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
       <input className="search-bar"
         type="text"
         placeholder="Search..."
-        value={searchTerm}
+        value={query}
         onChange={handleInputChange}
       />
     </div>

@@ -100,6 +100,11 @@
     color: var(--text-muted);
 }
 
+.navmenu a.active {
+    color: var(--text-muted);
+    font-weight: bold;
+}
+
 .header {
     background: var(--bg-panel);
     border-radius: 12px;
@@ -108,7 +113,7 @@
     border: 2px solid var(--border-color);
 }
 
-.dashboard {
+.base {
     padding: 24px 24px 48px;
     min-height: 100%;
 }
@@ -306,7 +311,9 @@
     filter: saturate(0.6);
 }
 
-.empty-row.compact {
+
+.empty-row-compact {
+    font-family: "Inter", sans-serif;
     padding: 8px;
     font-size: 16px;
     color: var(--text-muted);

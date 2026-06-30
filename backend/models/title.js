@@ -10,6 +10,7 @@ const titleSchema = mongoose.Schema({
     progressPct: { type: Number, required: false },
     runTime: { type: String, required: true},
     poster: { type: String, required: false},
+    imdbID: { type: String, required: true},
     hue: { type: Number, required: true }
 })
 
