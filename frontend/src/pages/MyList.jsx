@@ -40,6 +40,13 @@ export default function MyList() {
     setTitles((prev) => prev.map((t) => (t.id === id ? saved : t)))
   }
 
+  async function removeTitle(id) {
+    const t = titles.find((t) => t.id === id)
+    if (!t) return
+    await localTitlesService.remove(id)
+    setTitles((prev) => prev.filter((t) => t.id !== id))
+  }
+
   return (
     <div className="base">
       <header className="header">
@@ -49,7 +56,7 @@ export default function MyList() {
       </header>
       <div className="title-grid">
         {list.map((t) => (
-          <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showBar={true} showRemove={true}/>
+          <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showBar={true} showRemove={true} onRemove={removeTitle} />
         ))}
       </div>
     </div>

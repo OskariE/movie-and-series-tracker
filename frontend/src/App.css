@@ -181,7 +181,7 @@
 
 .title-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(305px, 1fr));
     gap: 18px;
     padding-bottom: 16px;
 }

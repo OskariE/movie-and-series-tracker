@@ -1,4 +1,4 @@
-function TitleCard({ title, onAdvance, onToggleMovie, poster, showBar, showRemove }) {
+function TitleCard({ title, onAdvance, onToggleMovie, poster, showBar, showRemove, onRemove }) {
   const isSeries = title.type === 'series'
   const isCompleted = title.status === 'completed'
 
@@ -55,7 +55,7 @@ function TitleCard({ title, onAdvance, onToggleMovie, poster, showBar, showRemov
                   </button>
                 )}
                 {showRemove && (
-                  <button className="title-action">
+                  <button className="title-action" onClick={() => onRemove(title.id)}>
                     Remove
                   </button>
                 )}

@@ -58,4 +58,13 @@ localRouter.put('/:id', async (request, response) => {
   response.status(200).json(updatedTitle).end()
 })
 
+localRouter.delete('/:id', async (request, response) => {
+  const title = await Title.findById(request.params.id)
+  if (!title) {
+    return response.status(404).end()
+  }
+  await Title.findByIdAndDelete(request.params.id)
+  response.status(200).end()
+})
+
 module.exports = localRouter

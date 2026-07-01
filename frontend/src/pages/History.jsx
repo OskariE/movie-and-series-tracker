@@ -13,6 +13,13 @@ export default function History() {
         )
     }, [])
 
+    async function removeTitle(id) {
+        const t = titles.find((t) => t.id === id)
+        if (!t) return
+        await localTitlesService.remove(id)
+        setTitles((prev) => prev.filter((t) => t.id !== id))
+      }
+
     return (
         <div className="base">
             <header className="header">
@@ -22,7 +29,7 @@ export default function History() {
             </header>
             <div className="title-grid">
                 {completed.map((t) => (
-                    <TitleCard key={t.id} title={t} poster={t.poster} />
+                    <TitleCard key={t.id} title={t} poster={t.poster} showRemove={true} onRemove={removeTitle} />
                 ))}
             </div>
         </div>
