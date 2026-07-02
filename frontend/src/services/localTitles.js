@@ -7,6 +7,11 @@ export const getAll = async () => {
   return response.data;
 };
 
+export const getById = async (id) => {
+  const response = await axios.get(`${API_URL}/${id}`);
+  return response.data;
+}
+
 export const create = async (data) => {
   const response = await axios.post(API_URL, data);
   return response.data;
@@ -24,6 +29,7 @@ export const remove = async (id) => {
 
 export default {
   getAll,
+  getById,
   create,
   update,
   remove

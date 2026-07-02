@@ -7,6 +7,12 @@ export const search = async (query) => {
   return response.data;
 };
 
+export const getByImdbID = async (imdbID) => {
+  const response = await axios.get(`${API_URL}/byid/${imdbID}`);
+  return response.data;
+}
+
 export default {
-    search
+    search,
+    getByImdbID
 }

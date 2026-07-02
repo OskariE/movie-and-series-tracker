@@ -1,40 +1,46 @@
-import { useEffect, useState } from 'react';
-import searchTitles from '../services/searchTitles.js';
-import localTitlesService from '../services/localTitles.js';
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import searchTitles from '../services/searchTitles.js'
+import localTitlesService from '../services/localTitles.js'
 import SearchBar from '../components/SearchBar.jsx'
+import TitleCard from '../components/TitleCard.jsx'
 
 export default function Search() {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [addedIds, setAddedIds] = useState([]);
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [addedIds, setAddedIds] = useState([])
+  const navigate = useNavigate()
+
+  const hasPoster = results.Poster && results.Poster !== 'N/A'
 
   useEffect(() => {
-      localTitlesService.getAll().then(a => 
+    localTitlesService.getAll().then(a =>
       setAddedIds(a.map(t => t.imdbID)))
-    }, [])
+  }, [])
 
   useEffect(() => {
     if (!query.trim()) {
-      setResults([]);
-      return;
+      setResults([])
+      return
     }
 
     const timeout = setTimeout(async () => {
-      setLoading(true);
+      setLoading(true)
       try {
-        const res = await searchTitles.search(query);
-        setResults(res);
-      } catch (err) {
-        console.error('Search failed', err);
-        setResults([]);
-      } finally {
-        setLoading(false);
-      }
-    }, 450);
+        const res = await searchTitles.search(query)
 
-    return () => clearTimeout(timeout);
-  }, [query]);
+        setResults(res)
+      } catch (err) {
+        console.error('Search failed', err)
+        setResults([])
+      } finally {
+        setLoading(false)
+      }
+    }, 300)
+
+    return () => clearTimeout(timeout)
+  }, [query])
 
   async function addTitle(result) {
     try {
@@ -42,7 +48,7 @@ export default function Search() {
         title: result.Title,
         type: result.Type === 'series' ? 'series' : 'movie',
         status: 'plan',
-        episodesTotal: result.Type === 'series' ? parseInt(result.totalSeasons) * 10 : undefined,
+        episodesTotal: result.episodesTotal,
         episodesWatched: result.Type === 'series' ? 0 : undefined,
         progressPct: result.Type === 'movie' ? 0 : undefined,
         runTime: result.Runtime,
@@ -50,14 +56,14 @@ export default function Search() {
         imdbID: result.imdbID
       }
 
-      const res = await localTitlesService.create(titleData);
+      const res = await localTitlesService.create(titleData)
       if (res) {
-        setAddedIds((prev) => [...prev, result.imdbID]);
+        setAddedIds((prev) => [...prev, result.imdbID])
       }
     } catch (err) {
-      console.error('Add failed', err);
+      console.error('Add failed', err)
     }
-    }
+  }
 
 
   return (
@@ -72,31 +78,33 @@ export default function Search() {
         setQuery={setQuery}
       />
 
-      {loading && <p className="empty-row-compact">Searching…</p>}
+      {loading && <p className="empty-row-compact search">Searching…</p>}
 
       {!loading && query && !results.imdbID && (
-        <p className="empty-row-compact">No matches for "{query}".</p>
+        <p className="empty-row-compact search">No matches for "{query}".</p>
       )}
       {results.imdbID && (
-      <ul className="search-results">
-          <li key={`${results.imdbID}`} className="search-result" >
-            <div className="search-result-info">
-              <img src={results.Poster} alt={results.Title} className="search-result-poster-img" />
-              <p className="search-result-title">{results.Title}</p>
-              <p className="search-result-meta">
-                {results.Type === 'series' ? 'Series' : 'Movie'}
-                {results.Released ? ` · ${results.Released.slice(7, 11)}` : ''}
-              </p>
+        <div className="search-results">
+          <article className="title">
+            {hasPoster && <img src={results.Poster} alt={results.Title} className="title-poster-img" onClick={() => navigate(`/title/byID/${results.imdbID}`)} />}
+            <div className="title-details">
+              <div className="title-info">
+                <h3 className="title-name" onClick={() => navigate(`/title/byID/${results.imdbID}`)}>
+                  {results.Title}
+                </h3>
+                <p><strong>Year:</strong> {results.Year}</p>
+                {results.Runtime && <p><strong>Runtime:</strong> {results.Runtime}</p>}
+                {results.Genre && <p><strong>Genres:</strong> {results.Genre}</p>}
+                {results.imdbRating && <p><strong>IMDb Rating:</strong> {results.imdbRating}</p>}
+                <div className="title-row bottom">
+                  <button className="title-action search" onClick={() => addTitle(results)} disabled={addedIds.includes(results.imdbID)}>
+                    {addedIds.includes(results.imdbID) ? 'Added' : 'Add to My List'}
+                  </button>
+                </div>
+              </div>
             </div>
-            <button
-              className="button"
-              onClick={() => addTitle(results)}
-              disabled={addedIds.includes(results.imdbID)}
-            >
-              {addedIds.includes(results.imdbID) ? 'Added' : 'Add to list'}
-            </button>
-          </li>
-      </ul> )}
+          </article>
+        </div>)}
     </div>
-  );
+  )
 }

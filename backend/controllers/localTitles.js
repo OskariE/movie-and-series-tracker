@@ -8,7 +8,6 @@ localRouter.get('/', async (request, response) => {
 
 localRouter.post('/', async (request, response) => {
   const body = request.body
-  console.log(body)
   const title = new Title({
     title: body.title,
     type: body.type,
@@ -23,7 +22,6 @@ localRouter.post('/', async (request, response) => {
   })
 
   const savedTitle = await title.save()
-  console.log("saved title: ",savedTitle)
   response.json(savedTitle)
 })
 
@@ -54,7 +52,6 @@ localRouter.put('/:id', async (request, response) => {
 
   const updatedTitle = await Title.findByIdAndUpdate(request.params.id, newTitle, { returnDocument: "after" })
 
-  console.log("title was updated:", updatedTitle)
   response.status(200).json(updatedTitle).end()
 })
 

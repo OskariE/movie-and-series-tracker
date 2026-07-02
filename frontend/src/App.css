@@ -1,4 +1,21 @@
+.empty-row-compact.search {
+    text-align: center;
+}
 
+.title-row.bottom {
+    display: flex;
+    justify-content: bottom;
+    margin-top: auto;
+}
+
+.title-action.search {
+    width: 100%;
+    text-align: center;
+}
+
+.header .button-container {
+    margin-right: auto;
+}
 .button {
     font-family: "Inter", sans-serif;
     font-size: 13px;
@@ -31,26 +48,20 @@
 .search-results {
     font-family: "Inter", sans-serif;
     color: var(--text-light);
-    list-style: none;
     margin: 0;
     padding: 12px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 18px;
     padding-bottom: 16px;
+    justify-content: center;
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.search-result {
-    background-color: var(--bg-panel-soft);
-    padding: 12px;
-    border: 2px solid var(--border-color);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    max-width: 100%;
-}
-
-.search-result-poster-img {
-    max-width: 100%;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
 }
 
 .search-bar {
@@ -65,7 +76,7 @@
     background-repeat: no-repeat;
     background-position: 14px center;
     background-size: 16px 16px;
-    border: 1.5px solid rgba(243, 234, 217, 0.12);
+    border: 1.5px solid var(--border-color);
     border-radius: 999px;
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -126,6 +137,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 30px;
 }
 
 .header-title {
@@ -136,6 +148,7 @@
     align-items: center;
     color: var(--text-light);
     font-family: "Bebas Neue", "Inter", sans-serif;
+    position: absolute;
 }
 
 .stat-grid {
@@ -192,8 +205,20 @@
     background: var(--title-cream);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    position: relative;
+}
+
+.title-poster-img:hover {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.title-details {
+    font-family: "IBM Plex Mono", monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 12px 16px;
+    gap: 6px;
+    width: 100%;
 }
 
 .title-poster {
@@ -202,9 +227,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    position: relative;
+    outline: none;
 }
 
 .title-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+.title-poster-singleview {
+    position: relative;
+    display: flex;
+    flex: 0 0 400px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    outline: none;
+}
+
+.title-poster-img-singleview {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -234,6 +280,11 @@
     font-weight: 600;
     margin: 0 0 2px;
     line-height: 1.2;
+    cursor: pointer;
+}
+
+.title-name:hover {
+    color: var(--ink-soft);
 }
 
 .title-row {

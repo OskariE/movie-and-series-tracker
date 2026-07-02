@@ -79,7 +79,7 @@ export default function Dashboard() {
         ) : (
           <div className="title-grid">
             {watchingNow.map((t) => (
-              <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showBar={true} />
+              <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showAdvance={true} showBar={true} showRemove={false} showAdd={false} />
             ))}
           </div>
         )}

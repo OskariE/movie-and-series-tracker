@@ -1,20 +1,28 @@
-function TitleCard({ title, onAdvance, onToggleMovie, poster, showBar, showRemove, onRemove }) {
+import { useNavigate } from 'react-router-dom';
+
+function TitleCard({ title, onAdvance, onToggleMovie, showAdvance, poster, showBar, showRemove, onRemove , onAdd, isAdded, showAdd }) {
   const isSeries = title.type === 'series'
   const isCompleted = title.status === 'completed'
+  const hasPoster = poster && poster !== 'N/A'
+
+  const navigate = useNavigate();
 
   return (
     <article className={`title ${isCompleted ? 'is-completed' : ''}`}>
       <div
         className="title-poster"
         style={{ background: `linear-gradient(160deg, hsl(${title.hue} 55% 38%), hsl(${title.hue} 55% 18%))` }}
+        onClick={() => navigate(`/title/byID/${title.imdbID}`)}
       >
-        <img src={poster} alt={title.title} className="title-poster-img" />
+        {hasPoster && <img src={poster} alt={title.title} className="title-poster-img" />}
       </div>
       <div className="title-info">
         <p className="title-kind">{isSeries ? 'Series' : 'Movie'}</p>
-        <h3 className="title-name">{title.title}</h3>
+        <h3 className="title-name" onClick={() => navigate(`/title/byID/${title.imdbID}`)}>
+          {title.title}
+        </h3>
 
-        {isSeries ? (
+        {isSeries && showAdvance ? (
           <>
             <div className="title-row">
               <span className="title-meta">
@@ -39,17 +47,16 @@ function TitleCard({ title, onAdvance, onToggleMovie, poster, showBar, showRemov
         ) : (
           <>
             <div className="title-row">
-              {showBar && (
+              {showBar && showAdvance && (
                 <div className="filmbar">
                   <div className="filmbar-fill" style={{ width: `${title.progressPct}%` }} />
                 </div>
               )}
             </div>
             <div className="title-row">
-              {isCompleted ? (
                   <div className="title-meta">
                   </div>
-                ) : (
+              {showAdvance && (
                   <button className="title-action" onClick={() => onToggleMovie(title.id)}>
                     Mark watched
                   </button>
@@ -57,6 +64,11 @@ function TitleCard({ title, onAdvance, onToggleMovie, poster, showBar, showRemov
                 {showRemove && (
                   <button className="title-action" onClick={() => onRemove(title.id)}>
                     Remove
+                  </button>
+                )}
+                {showAdd && (
+                  <button className="title-action" onClick={() => onAdd(title.id)} disabled={isAdded}>
+                    {isAdded ? 'Added' : 'Add to list'}
                   </button>
                 )}
             </div>

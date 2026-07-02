@@ -56,7 +56,7 @@ export default function MyList() {
       </header>
       <div className="title-grid">
         {list.map((t) => (
-          <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showBar={true} showRemove={true} onRemove={removeTitle} />
+          <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showBar={true} showRemove={true} onRemove={removeTitle} showAdvance={true} />
         ))}
       </div>
     </div>

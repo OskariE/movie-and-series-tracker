@@ -4,7 +4,7 @@ const SearchBar = ({ query, setQuery }) => {
   };
 
   return (
-    <div>
+    <div className="search-bar-container">
       <input className="search-bar"
         type="text"
         placeholder="Search..."
