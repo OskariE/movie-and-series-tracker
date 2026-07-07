@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Stat from '../components/Stat.jsx'
 import TitleCard from '../components/TitleCard.jsx'
 import localTitlesService from '../services/localTitles.js'
+import Header from '../components/Header.jsx'
 
 export default function History() {
     const [titles, setTitles] = useState([])
@@ -22,12 +23,8 @@ export default function History() {
 
     return (
         <div className="base">
-            <header className="header">
-                <div className="header-row">
-                    <h1 className="header-title">History</h1>
-                </div>
-            </header>
-            <div className="title-grid">
+            <Header headerTitle="History" />
+            <div className="title-grid-big">
                 {completed.map((t) => (
                     <TitleCard key={t.id} title={t} poster={t.poster} showRemove={true} onRemove={removeTitle} />
                 ))}

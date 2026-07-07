@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-function TitleCard({ title, onAdvance, onToggleMovie, showAdvance, poster, showBar, showRemove, onRemove , onAdd, isAdded, showAdd }) {
+export default function TitleCard({ title, onAdvance, onToggleMovie, showAdvance, poster, showBar, showRemove, onRemove , onAdd, isAdded, showAdd }) {
   const isSeries = title.type === 'series'
   const isCompleted = title.status === 'completed'
   const hasPoster = poster && poster !== 'N/A'
@@ -54,15 +54,13 @@ function TitleCard({ title, onAdvance, onToggleMovie, showAdvance, poster, showB
               )}
             </div>
             <div className="title-row">
-                  <div className="title-meta">
-                  </div>
               {showAdvance && (
                   <button className="title-action" onClick={() => onToggleMovie(title.id)}>
                     Mark watched
                   </button>
                 )}
                 {showRemove && (
-                  <button className="title-action" onClick={() => onRemove(title.id)}>
+                  <button className="title-action remove" onClick={() => onRemove(title.id)}>
                     Remove
                   </button>
                 )}
@@ -78,5 +76,3 @@ function TitleCard({ title, onAdvance, onToggleMovie, showAdvance, poster, showB
     </article>
   )
 }
-
-export default TitleCard

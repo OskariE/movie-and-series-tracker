@@ -1,4 +1,4 @@
-const SearchBar = ({ query, setQuery }) => {
+export default function SearchBar({ query, setQuery }) {
   const handleInputChange = (event) => {
     setQuery(event.target.value);
   };
@@ -14,5 +14,3 @@ const SearchBar = ({ query, setQuery }) => {
     </div>
   );
 };
-
-export default SearchBar;

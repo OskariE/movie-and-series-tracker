@@ -5,17 +5,11 @@
 }
 
 :root {
-  --bg-deep: rgb(18, 21, 28); 
-  --bg-panel: rgb(26, 32, 48);
-  --bg-panel-soft: rgb(35, 42, 61);
-  --title-cream: rgb(243, 234, 217);
-  --header-gold: rgb(232, 162, 61);
-  --header-gold-dim: rgb(185, 127, 46);
-  --ink: rgb(27, 32, 48);
-  --ink-soft: rgb(107, 100, 80);
-  --text-light: rgb(243, 234, 217);
-  --text-muted: rgb(142, 147, 166);
-  --border-color: rgba(243, 234, 217, 0.08);
+  --background-color: rgb(27, 27, 40);
+  --panel-color: rgb(41, 41, 61);
+  --dark-blue: rgb(19, 29, 41);
+  --off-white: rgb(255, 246, 234);
+  --border-color: rgb(87, 82, 69);
 }
 
 
@@ -27,5 +21,6 @@ html, body, #root {
 }
 
 body {
-  background: var(--bg-deep);
+  background: var(--background-color);
+  font-family: 'Inter', sans-serif;
 }

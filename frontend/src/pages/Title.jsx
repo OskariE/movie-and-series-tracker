@@ -43,10 +43,9 @@ export default function Title() {
             <article className="title">
                 <div
                     className="title-poster-singleview"
-                    style={{ background: `linear-gradient(160deg, hsl(${title.hue} 55% 38%), hsl(${title.hue} 55% 18%))` }}
                     onClick={() => navigate(`/title/byID/${title.imdbID}`)}
                 >
-                    {hasPoster && <img src={title.Poster} alt={title.title} className="title-poster-img-singleview" />}
+                    {hasPoster && <img src={title.Poster} alt={title.Title} className="title-poster-img-singleview" />}
                 </div>
                 <div className="title-details">
                     <div className="title-info">

@@ -1,4 +1,4 @@
-function Stat({ label, value }) {
+export default function Stat({ label, value }) {
   return (
     <div className="stat">
       <span className="stat-value">{value}</span>
@@ -6,4 +6,3 @@ function Stat({ label, value }) {
     </div>
   )
 }
-export default Stat;

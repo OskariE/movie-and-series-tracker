@@ -1,6 +1,7 @@
 import localTitlesService from '../services/localTitles.js'
 import { useState, useEffect } from 'react'
 import TitleCard from '../components/TitleCard.jsx'
+import Header from '../components/Header.jsx'
 
 export default function MyList() {
   const [titles, setTitles] = useState([])
@@ -49,12 +50,8 @@ export default function MyList() {
 
   return (
     <div className="base">
-      <header className="header">
-        <div className="header-row">
-          <h1 className="header-title">My List</h1>
-        </div>
-      </header>
-      <div className="title-grid">
+      <Header headerTitle="My list" />
+      <div className="title-grid-big">
         {list.map((t) => (
           <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showBar={true} showRemove={true} onRemove={removeTitle} showAdvance={true} />
         ))}

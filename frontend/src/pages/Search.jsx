@@ -4,6 +4,7 @@ import searchTitles from '../services/searchTitles.js'
 import localTitlesService from '../services/localTitles.js'
 import SearchBar from '../components/SearchBar.jsx'
 import TitleCard from '../components/TitleCard.jsx'
+import Header from '../components/Header.jsx'
 
 export default function Search() {
   const [query, setQuery] = useState('')
@@ -68,11 +69,7 @@ export default function Search() {
 
   return (
     <div className="base">
-      <header className="header">
-        <div className="header-row">
-          <h1 className="header-title">Search</h1>
-        </div>
-      </header>
+      <Header headerTitle="Search" />
       <SearchBar
         query={query}
         setQuery={setQuery}
