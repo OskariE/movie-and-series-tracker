@@ -15,14 +15,16 @@ export default function MyList() {
     )
   }, [])
 
-  async function advanceEpisode(id) {
-    const t = titles.find((t) => t.id === id)
-    if (!t || t.type !== 'series') return
-    const next = Math.min(t.episodesWatched + 1, t.episodesTotal)
-    const updated = { ...t, episodesWatched: next, status: next === t.episodesTotal ? 'completed' : 'watching' }
-    const saved = await localTitlesService.update(id, updated)
-    setTitles((prev) => prev.map((t) => (t.id === id ? saved : t)))
+  async function advanceEpisode(titleId) {
+    const foundTitle = titles.find((t) => t.id === titleId)
+    console.log(foundTitle)
+    const next = (foundTitle.episodesWatched + 1)
+    const updated = {...foundTitle, episodesWatched: next, status: next === foundTitle.episodesTotal ? 'completed' : 'watching'}
+
+    const savedTitle = await localTitlesService.update(titleId, updated)
+    setTitles((prev) => prev.map ((t) => (t.id === titleId ? savedTitle : t)))
   }
+  
 
   async function changeStatus(id) {
     const t = titles.find((t) => t.id === id)
@@ -32,14 +34,6 @@ export default function MyList() {
     setTitles((prev) => prev.map((t) => (t.id === id ? saved : t)))
   }
 
-  async function toggleMovieWatched(id) {
-    const t = titles.find((t) => t.id === id)
-    if (!t || t.type !== 'movie') return
-    const watched = t.status === 'completed'
-    const updated = { ...t, status: watched ? 'watching' : 'completed', progressPct: 100 }
-    const saved = await localTitlesService.update(id, updated)
-    setTitles((prev) => prev.map((t) => (t.id === id ? saved : t)))
-  }
 
   async function removeTitle(id) {
     const t = titles.find((t) => t.id === id)
@@ -53,7 +47,7 @@ export default function MyList() {
       <Header headerTitle="My list" />
       <div className="title-grid-big">
         {list.map((t) => (
-          <TitleCard key={t.id} title={t} onAdvance={advanceEpisode} onToggleMovie={toggleMovieWatched} poster={t.poster} showBar={true} showRemove={true} onRemove={removeTitle} showAdvance={true} />
+          <TitleCard key={t.id} title={t} onAdvanceEpisode={() => advanceEpisode(t.id)} poster={t.poster} showRemove={true} onRemove={removeTitle} />
         ))}
       </div>
     </div>

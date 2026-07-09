@@ -1,78 +1,30 @@
 import { useNavigate } from 'react-router-dom';
 
-export default function TitleCard({ title, onAdvance, onToggleMovie, showAdvance, poster, showBar, showRemove, onRemove , onAdd, isAdded, showAdd }) {
-  const isSeries = title.type === 'series'
-  const isCompleted = title.status === 'completed'
-  const hasPoster = poster && poster !== 'N/A'
-
+export default function TitleCard({ title, onAdvanceEpisode, onAdvanceMovie, showAdvance, poster, showRemove, onRemove }) {
   const navigate = useNavigate();
 
   return (
-    <article className={`title ${isCompleted ? 'is-completed' : ''}`}>
-      <div
-        className="title-poster"
-        style={{ background: `linear-gradient(160deg, hsl(${title.hue} 55% 38%), hsl(${title.hue} 55% 18%))` }}
-        onClick={() => navigate(`/title/byID/${title.imdbID}`)}
-      >
-        {hasPoster && <img src={poster} alt={title.title} className="title-poster-img" />}
+    <div className="title">
+      <div className="title-poster-box">
+        <img className="title-poster-img" src={title.poster}/>
       </div>
       <div className="title-info">
-        <p className="title-kind">{isSeries ? 'Series' : 'Movie'}</p>
-        <h3 className="title-name" onClick={() => navigate(`/title/byID/${title.imdbID}`)}>
-          {title.title}
-        </h3>
-
-        {isSeries && showAdvance ? (
-          <>
-            <div className="title-row">
-              <span className="title-meta">
-                E{title.episodesWatched} of {title.episodesTotal}
-              </span>
-            </div>
-            <div className="title-row">
-              <button
-                className="title-action"
-                onClick={() => onAdvance(title.id)}
-                disabled={title.episodesWatched >= title.episodesTotal}
-              >
-                {title.episodesWatched >= title.episodesTotal ? 'Finished' : 'Mark next watched'}
-              </button>
-              {showRemove && (
-                  <button className="title-action">
-                    Remove
-                  </button>
-                )}
-            </div>
-          </>
+          <h3 className="title-header">{title.title}</h3>
+        {title.type === "movie" ? (
+          <p>
+            Progress: {title.progressPct}%
+          </p>
         ) : (
-          <>
-            <div className="title-row">
-              {showBar && showAdvance && (
-                <div className="filmbar">
-                  <div className="filmbar-fill" style={{ width: `${title.progressPct}%` }} />
-                </div>
-              )}
-            </div>
-            <div className="title-row">
-              {showAdvance && (
-                  <button className="title-action" onClick={() => onToggleMovie(title.id)}>
-                    Mark watched
-                  </button>
-                )}
-                {showRemove && (
-                  <button className="title-action remove" onClick={() => onRemove(title.id)}>
-                    Remove
-                  </button>
-                )}
-                {showAdd && (
-                  <button className="title-action" onClick={() => onAdd(title.id)} disabled={isAdded}>
-                    {isAdded ? 'Added' : 'Add to list'}
-                  </button>
-                )}
-            </div>
-          </>
+          <p>
+            E{title.episodesWatched} of E{title.episodesTotal}
+          </p>
+        )}
+        {title.type === "movie" ? (
+          <button className="title-button" onClick={onAdvanceMovie}>Mark watched</button>
+        ) : (
+          <button className="title-button" onClick={onAdvanceEpisode}>Mark next watched</button>
         )}
       </div>
-    </article>
+    </div>
   )
 }
