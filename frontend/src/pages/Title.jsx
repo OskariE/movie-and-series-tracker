@@ -37,10 +37,10 @@ export default function Title() {
                             Back
                         </button>
                     </div>
-                    <h1 className="header-title">{title.Title}</h1>
+                    <h1 className="header-title singleview">{title.Title}</h1>
                 </div>
             </header>
-            <article className="title">
+            <article className="title singleview">
                 <div
                     className="title-poster-singleview"
                     onClick={() => navigate(`/title/byID/${title.imdbID}`)}

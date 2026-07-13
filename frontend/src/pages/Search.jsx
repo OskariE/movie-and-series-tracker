@@ -5,6 +5,7 @@ import localTitlesService from '../services/localTitles.js'
 import SearchBar from '../components/SearchBar.jsx'
 import TitleCard from '../components/TitleCard.jsx'
 import Header from '../components/Header.jsx'
+import Form from '../components/Form.jsx'
 
 export default function Search() {
   const [query, setQuery] = useState('')
@@ -82,8 +83,10 @@ export default function Search() {
       )}
       {results.imdbID && (
         <div className="search-results">
-          <article className="title">
+          <div className="title">
+            <div className="search-title-poster">
             {hasPoster && <img src={results.Poster} alt={results.Title} className="title-poster-img" onClick={() => navigate(`/title/byID/${results.imdbID}`)} />}
+            </div>
             <div className="title-details">
               <div className="title-info">
                 <h3 className="title-name" onClick={() => navigate(`/title/byID/${results.imdbID}`)}>
@@ -94,14 +97,18 @@ export default function Search() {
                 {results.Genre && <p><strong>Genres:</strong> {results.Genre}</p>}
                 {results.imdbRating && <p><strong>IMDb Rating:</strong> {results.imdbRating}</p>}
                 <div className="title-row bottom">
-                  <button className="title-action search" onClick={() => addTitle(results)} disabled={addedIds.includes(results.imdbID)}>
+                  <button className="title-button" onClick={() => addTitle(results)} disabled={addedIds.includes(results.imdbID)}>
                     {addedIds.includes(results.imdbID) ? 'Added' : 'Add to My List'}
                   </button>
                 </div>
               </div>
             </div>
-          </article>
+          </div>
         </div>)}
+
+        {results.Title === undefined && (
+          <Form/>
+        )}
     </div>
   )
 }

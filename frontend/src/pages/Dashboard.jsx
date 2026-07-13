@@ -40,7 +40,7 @@ export default function Dashboard() {
 
         <div className="stat-grid">
           <Stat label="Watching" value={watching.length}/>
-          <Stat label="Completed" />
+          <Stat label="Completed" value={completed.length}/>
           <Stat label="Planned"  value={planned.length}/>
           <Stat label="Hours Logged" />
         </div>
@@ -59,7 +59,7 @@ export default function Dashboard() {
             )}
           </ul>
          ) : (
-          <p>No planned titles</p> )}
+          <p className="planned-list empty">No planned titles</p> )}
 
           {completed.length != 0 ? (
             <ul className="watched-list">
@@ -68,7 +68,7 @@ export default function Dashboard() {
               )}
             </ul>
           ) : (
-            <p></p>
+            <p className="watched-list empty">No finished titles</p>
           )}
         </div>
       </div>
