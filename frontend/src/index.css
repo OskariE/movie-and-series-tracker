@@ -8,15 +8,15 @@
   --background-color: rgb(27, 27, 40);
   --panel-color: rgb(41, 41, 61);
   --off-white: rgb(255, 246, 234);
-  --border-color: rgb(87, 82, 69);
+  --border-color: rgb(136, 98, 0);
 }
 
 
-html, body, #root {
+html, body, base, #root {
   margin: 0;
   padding: 0;
-  min-width: 100vh;
-  min-height: 100vh;
+  min-width: 100dvw;
+  min-height: 100dvh;
 }
 
 body {

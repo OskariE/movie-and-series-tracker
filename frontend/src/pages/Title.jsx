@@ -31,25 +31,19 @@ export default function Title() {
     return (
         <div className="base">
             <header className="header">
-                <div className="header-row">
-                    <div className="button-container">
-                        <button className="button" onClick={() => navigate(-1)}>
-                            Back
-                        </button>
-                    </div>
+                <div className="header-row singleview">
                     <h1 className="header-title singleview">{title.Title}</h1>
                 </div>
             </header>
-            <article className="title singleview">
+            <div className="title-singleview">
                 <div
                     className="title-poster-singleview"
-                    onClick={() => navigate(`/title/byID/${title.imdbID}`)}
                 >
-                    {hasPoster && <img src={title.Poster} alt={title.Title} className="title-poster-img-singleview" />}
+                    {hasPoster && <img src={title.Poster} alt={title.Title} className="title-poster-img singleview" />}
                 </div>
                 <div className="title-details">
                     <div className="title-info">
-                        <p><strong>Year:</strong> {year}</p>
+                        {year !== '' && <p><strong>Year:</strong> {year}</p>}
                         {runtime && <p><strong>Runtime:</strong> {runtime}</p>}
                         {totalSeasons && <p><strong>Total Seasons:</strong> {totalSeasons}</p>}
                         {genres.length > 0 && <p><strong>Genres:</strong> {genres.join(', ')}</p>}
@@ -70,7 +64,7 @@ export default function Title() {
                         )}
                     </div>
                 </div>
-            </article>
+            </div>
         </div>
     )
 }

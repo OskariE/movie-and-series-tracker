@@ -83,7 +83,7 @@ export default function Search() {
       )}
       {results.imdbID && (
         <div className="search-results">
-          <div className="title">
+          <div className="search-title">
             <div className="search-title-poster">
             {hasPoster && <img src={results.Poster} alt={results.Title} className="title-poster-img" onClick={() => navigate(`/title/byID/${results.imdbID}`)} />}
             </div>
@@ -96,8 +96,9 @@ export default function Search() {
                 {results.Runtime && <p><strong>Runtime:</strong> {results.Runtime}</p>}
                 {results.Genre && <p><strong>Genres:</strong> {results.Genre}</p>}
                 {results.imdbRating && <p><strong>IMDb Rating:</strong> {results.imdbRating}</p>}
+                {results.Plot && <p><strong>Plot:</strong> {results.Plot}</p>}
                 <div className="title-row bottom">
-                  <button className="title-button" onClick={() => addTitle(results)} disabled={addedIds.includes(results.imdbID)}>
+                  <button className="title-button search" onClick={() => addTitle(results)} disabled={addedIds.includes(results.imdbID)}>
                     {addedIds.includes(results.imdbID) ? 'Added' : 'Add to My List'}
                   </button>
                 </div>

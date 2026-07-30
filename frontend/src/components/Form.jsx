@@ -6,12 +6,15 @@ export default function Form() {
     const [title, setTitle] = useState("")
     const [runtime, setRuntime] = useState("")
     const [episodes, setEpisodes] = useState()
+    const [success, setSuccess] = useState(false)
 
     const handleChange = (event) => {
+        event.preventDefault()
         setType(event.target.value)
     }
 
     async function addTitle(result) {
+        event.preventDefault()
         try {
           const titleData = {
             title: title,
@@ -20,13 +23,17 @@ export default function Form() {
             episodesTotal: episodes,
             episodesWatched: type === 'series' ? 0 : undefined,
             progressPct: type === 'movie' ? 0 : undefined,
-            runTime: runtime,
+            runTime: runtime + " min",
             imdbID: crypto.randomUUID()
           }
-    
+          console.log(titleData)
           const res = await localTitlesService.create(titleData)
           if (res) {
-            setAddedIds((prev) => [...prev, result.imdbID])
+            setSuccess(true)
+
+            await setTimeout(() => {
+              setSuccess(false)
+            }, 3000)
           }
         } catch (err) {
           console.error('Add failed', err)
@@ -36,17 +43,33 @@ export default function Form() {
     return (
         <div className="form-container">
           <form className="form" onSubmit={addTitle}>
-            <label className="form-label">Add your own movie or series:</label>
+            <label className="form-label">OR</label>
+            <label className="form-label">Add your own title:</label>
+              <div className="form-row">
+                <label className="form-label small">Choose type:</label>
                 <select name="type" className="form-input" value={type} onChange={handleChange}>
                     <option value="movie">Movie</option>
                     <option value="series">Series</option>
                 </select>
-                <input type="text" placeholder="Title" className="form-input" onChange={({target}) => setTitle(target.value)}/>
-                <input type="text" placeholder="Runtime" className="form-input" onChange={({target}) => setRuntime(target.value)}/>
+              </div>
+              <div className="form-row">
+                <label className="form-label small">Title:</label>
+                <input type="text" className="form-input" required={true} minLength="1" maxLength="50" onChange={({target}) => setTitle(target.value)}/>
+              </div>
+              <div className="form-row">
+                <label className="form-label small">Runtime (minutes):</label>
+                <input type="number" className="form-input" required={true} min="1" max="1000" onChange={({target}) => setRuntime(target.value)}/>
+              </div>
                 {type === "series" && (
-                    <input type="number" placeholder="Total Episodes" className="form-input" onChange={({target}) => setEpisodes(target.value)}/>
+                  <div className="form-row">
+                    <label className="form-label small">Total episodes:</label>
+                    <input type="number" required={true} className="form-input" min="1" max="1000" onChange={({target}) => setEpisodes(target.value)}/>
+                  </div>
                 )}
                 <button type="submit" className="form-submit">Add</button>
+                {success && (
+                  <p className="success">Title added to list</p>
+                )}
           </form>
         </div>
     )

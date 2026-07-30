@@ -24,6 +24,14 @@ export default function MyList() {
     const savedTitle = await localTitlesService.update(titleId, updated)
     setTitles((prev) => prev.map ((t) => (t.id === titleId ? savedTitle : t)))
   }
+
+  async function advanceMovie(titleId) {
+    const foundTitle = titles.find((t) => t.id === titleId)
+
+    const updated = {...foundTitle, status: "completed"}
+    const savedTitle = await localTitlesService.update(titleId, updated)
+    setTitles((prev) => prev.map((t) => t.id === titleId ? savedTitle : t))
+  }
   
 
   async function changeStatus(id) {
@@ -47,7 +55,7 @@ export default function MyList() {
       <Header headerTitle="My list" />
       <div className="title-grid-big">
         {list.map((t) => (
-          <TitleCard key={t.id} title={t} onAdvanceEpisode={() => advanceEpisode(t.id)} poster={t.poster} showRemove={true} onRemove={removeTitle} />
+          <TitleCard key={t.id} title={t} onAdvanceEpisode={() => advanceEpisode(t.id)} onAdvanceMovie={() => advanceMovie(t.id)} poster={t.poster} showRemove={true} onRemove={() => removeTitle(t.id)} showAdvance={true} />
         ))}
       </div>
     </div>

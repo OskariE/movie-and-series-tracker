@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Stat from '../components/Stat.jsx'
 import TitleCard from '../components/TitleCard.jsx'
 import localTitlesService from '../services/localTitles.js'
@@ -10,6 +11,20 @@ export default function Dashboard() {
     const planned = titles.filter((t) => t.status === "plan")
     const completed = titles.filter((t) => t.status === "completed")
 
+    function getHours() {
+        const minutes = titles.reduce((sum, t) => {
+          if (titles.length === 0) return 0
+          if (t.type === "series" && t.runTime !== "N/A") return (sum + Number(t.episodesWatched * Number(t.runTime.split(" ")[0])))
+          if (t.runTime !== "N/A" && t.status === "completed") return (sum + Number(t.runTime.split(" ")[0]))
+          return sum
+        }, 0)
+
+      return Math.round(minutes/60)
+    }
+  
+
+    const navigate = useNavigate()
+
     useEffect(() => {
       localTitlesService.getAll().then(t => 
         setTitles(t)
@@ -18,7 +33,7 @@ export default function Dashboard() {
 
     async function advanceEpisode(titleId) {
       const foundTitle = titles.find((t) => t.id === titleId)
-      console.log(foundTitle)
+
       const next = (foundTitle.episodesWatched + 1)
       const updated = {...foundTitle, episodesWatched: next, status: next === foundTitle.episodesTotal ? 'completed' : 'watching'}
 
@@ -26,10 +41,18 @@ export default function Dashboard() {
       setTitles((prev) => prev.map ((t) => (t.id === titleId ? savedTitle : t)))
     }
 
+    async function advanceMovie(titleId) {
+      const foundTitle = titles.find((t) => t.id === titleId)
+
+      const updated = {...foundTitle, status: "completed"}
+      const savedTitle = await localTitlesService.update(titleId, updated)
+      setTitles((prev) => prev.map((t) => t.id === titleId ? savedTitle : t))
+    }
+
     async function statusToWatching(titleId) {
       const foundTitle = titles.find((t) => t.id === titleId)
       const updated = {...foundTitle, status: "watching"}
-      console.log(updated)
+
       const savedTitle = await localTitlesService.update(titleId, updated)
       setTitles((prev) => prev.map((t) => (t.id === titleId ? savedTitle : t)))
     }
@@ -42,33 +65,51 @@ export default function Dashboard() {
           <Stat label="Watching" value={watching.length}/>
           <Stat label="Completed" value={completed.length}/>
           <Stat label="Planned"  value={planned.length}/>
-          <Stat label="Hours Logged" />
+          <Stat label="Hours Logged" value={getHours()}/>
         </div>
 
         <div className="title-grid">
           {watching.map(t => 
-            <TitleCard key={t.id} title={t} poster={t.poster} onAdvanceEpisode={() => advanceEpisode(t.id)}/>
+            <TitleCard key={t.id} title={t} poster={t.poster} onAdvanceEpisode={() => advanceEpisode(t.id)} onAdvanceMovie={() => advanceMovie(t.id)} showAdvance={true}/>
           )}
         </div>
       
         <div className="list-split">
           {planned.length != 0 ? (
             <ul className="planned-list">
-              {planned.map(t => 
-                <li key={t.id} className="planned-listitem">{t.title} <button className="list-button" onClick={() => statusToWatching(t.id)}>Start watching</button></li>
+              <h2 className="list-header">Planned titles</h2>
+              {planned.slice(-5, planned.length).reverse().map(t => (
+                t.imdbID.length === 36 ? (
+                  <li key={t.id} className="planned-listitem"><div className="listitem-name" >{t.title}</div> <button className="list-button" onClick={() => statusToWatching(t.id)}>Start watching</button></li>
+                ) : (
+                  <li key={t.id} className="planned-listitem"><div className="listitem-name" onClick={() => navigate(`/title/byID/${t.imdbID}`)}>{t.title}</div> <button className="list-button" onClick={() => statusToWatching(t.id)}>Start watching</button></li>
+                )
+              )
             )}
           </ul>
          ) : (
-          <p className="planned-list empty">No planned titles</p> )}
+          <ul className="planned-list">
+          <h2 className="list-header">No planned titles</h2>
+          </ul> )}
+          
 
           {completed.length != 0 ? (
             <ul className="watched-list">
-              {completed.map(t => 
-                <li key={t.id} className="watched-listitem">{t.title}</li>
-              )}
+              <h2 className="list-header">Recently finished</h2>
+              {completed.slice(-5, completed.length).reverse().map(t => (
+                t.imdbID.length === 36 ? (
+                  <li key={t.id} className="watched-listitem"><div className="listitem-name" >{t.title}</div></li>
+                ) : (
+                  <li key={t.id} className="watched-listitem"><div className="listitem-name" onClick={() => navigate(`/title/byID/${t.imdbID}`)}>{t.title}</div></li>
+                )
+              )
+            )}
+              
             </ul>
           ) : (
-            <p className="watched-list empty">No finished titles</p>
+            <ul className="planned-list">
+            <h2 className="list-header">No finished titles</h2>
+            </ul>
           )}
         </div>
       </div>

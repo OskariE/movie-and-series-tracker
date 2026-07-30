@@ -26,7 +26,7 @@ export default function History() {
             <Header headerTitle="History" />
             <div className="title-grid-big">
                 {completed.map((t) => (
-                    <TitleCard key={t.id} title={t} poster={t.poster} showRemove={true} onRemove={removeTitle} />
+                    <TitleCard key={t.id} title={t} poster={t.poster} showRemove={true} onRemove={() => removeTitle(t.id)} />
                 ))}
             </div>
         </div>
