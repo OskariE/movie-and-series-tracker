@@ -76,10 +76,10 @@ export default function Search() {
         setQuery={setQuery}
       />
 
-      {loading && <p className="empty-row-compact search">Searching…</p>}
+      {loading && <p className="empty-search-row">Searching…</p>}
 
       {!loading && query && !results.imdbID && (
-        <p className="empty-row-compact search">No matches for "{query}".</p>
+        <p className="empty-search-row">No matches for "{query}".</p>
       )}
       {results.imdbID && (
         <div className="search-results">

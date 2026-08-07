@@ -65,7 +65,7 @@ export default function Dashboard() {
           <Stat label="Watching" value={watching.length}/>
           <Stat label="Completed" value={completed.length}/>
           <Stat label="Planned"  value={planned.length}/>
-          <Stat label="Hours Logged" value={getHours()}/>
+          <Stat label="Hours Watched" value={getHours()}/>
         </div>
 
         <div className="title-grid">

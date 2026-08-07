@@ -72,7 +72,6 @@
     min-width: 100%;
     min-height: 100%;
     background-color: var(--off-white);
-    border: 1px solid var(--border-color);
     border-radius: 6px;
 }
 
@@ -118,6 +117,7 @@
     align-items: center;
     font-size: 12px;
     padding: 6px;
+    margin: 4px;
     border: 0;
     border-radius: 6px;
     background-color: var(--off-white);
@@ -196,8 +196,8 @@
     display: flex;
     flex: 1;
     flex-wrap: wrap;
-    height: 100%;
-    margin: 0px 40px 0 40px;
+    height: auto;
+    margin: 0 40px 0 40px;
     gap: 20px;
 }
 
@@ -209,6 +209,7 @@
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 20px;
+    height: auto;
 }
 
 .planned-list.empty, .watched-list.empty {
@@ -234,7 +235,7 @@
 }
 
 .listitem-name {
-    padding-right: 8px;
+    padding: 8px 8px 8px 0;
 }
 
 .listitem-name:hover {
@@ -273,6 +274,13 @@
     color: var(--off-white)
 }
 
+
+.empty-search-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--off-white)
+}
 
 .search-bar {
     width: 300px;
