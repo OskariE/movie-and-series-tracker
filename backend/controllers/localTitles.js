@@ -20,7 +20,7 @@ localRouter.post('/', async (request, response) => {
     imdbID: body.imdbID,
     hue: Math.floor(Math.random() * 360)
   })
-
+  
   const savedTitle = await title.save()
   response.json(savedTitle)
 })
