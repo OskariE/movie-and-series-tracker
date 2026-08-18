@@ -8,12 +8,17 @@ const searchTitlesRouter = require("./controllers/searchTitles");
 
 const app = express();
 
+const path = require('path')
+
 app.use(cors());
 app.use(express.json());
-app.use(express.static('dist'));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use("/api/titles", localTitlesRouter);
 app.use("/api/search", searchTitlesRouter);
 
+app.get('/*path', (request, response) => {
+  response.sendFile(path.resolve('dist', 'index.html'));
+});
 
 mongoose.set('strictQuery', false)
 
